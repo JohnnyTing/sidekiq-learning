@@ -1,0 +1,11 @@
+:concurrency: 5
+:queues:
+  - default
+  - [hard_worker, 2]
+
+development:
+  :concurrency: 5
+staging:
+  :concurrency: 10
+production:
+  :concurrency: 20

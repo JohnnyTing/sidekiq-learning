@@ -1,0 +1,7 @@
+first_job:
+  cron: "*/1 * * * *"
+  class: "HardWorker"
+  queue: "hard_worker"
+  args:
+    - "cron"
+    - 100
