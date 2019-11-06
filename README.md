@@ -11,10 +11,10 @@
 ## Install
 
 ```sh
-bundle
+bundle install
 ```
 ## Usage
-reference: 
+Reference: 
 
 [sidekiq官方文档](https://github.com/mperham/sidekiq/wiki)
 
@@ -69,11 +69,12 @@ gem 'sidekiq'
 
 ```ruby
 class HardWorker
- include Sidekiq::Worker
- def perform(name, count)
- sleep(count)
- pp "hello #{name}"
- end
+  include Sidekiq::Worker
+  
+  def perform(name, count)
+    sleep(count)
+    pp "hello #{name}"
+  end
 end
 
 # 调用方式
@@ -87,15 +88,15 @@ HardWorker.perform_async('redis', 10)
 
 ```yml
 redis: &redis
- redis_server: 'localhost'
- redis_port: 6378
- redis_db_num: 1
- redis_namespace: 'redis_sidekiq'
+  redis_server: 'localhost'
+  redis_port: 6378
+  redis_db_num: 1
+  redis_namespace: 'redis_sidekiq'
 # redis_password: sidekiq
 development:
- <<: *redis
+  <<: *redis
 production:
- <<: *redis
+  <<: *redis
 ```
 
 7.添加sidekiq初始化配置: config/initializers/sidekiq.rb
@@ -116,6 +117,7 @@ Sidekiq.configure_server do |config|
  config.redis = { url: redis_url, namespace: redis_namespace }
  # config.redis = { url: redis_url, namespace: redis_namespace, password: password }
 end
+
 Sidekiq.configure_client do |config|
  config.redis = { url: redis_url, namespace: redis_namespace }
  # config.redis = { url: redis_url, namespace: redis_namespace, password: password }
@@ -128,14 +130,14 @@ end
 ```yml
 :concurrency: 5
 :queues:
- - default
- - [hard_worker, 2]
+  - default
+  - [hard_worker, 2]
 development:
- :concurrency: 5
+  :concurrency: 5
 staging:
- :concurrency: 10
+  :concurrency: 10
 production:
- :concurrency: 20
+  :concurrency: 20
 ```
 
 9.配置在routes.rb 配置sidekiq web-ui
@@ -161,12 +163,12 @@ gem "sidekiq-cron", "~> 1.1"
 
 ```yml
 first_job:
- cron: "*/1 * * * *"
- class: "HardWorker"
- queue: "hard_worker"
- args:
- - "cron"
- - 10
+  cron: "*/1 * * * *"
+  class: "HardWorker"
+  queue: "hard_worker"
+  args:
+    - "cron"
+    - 10
 ```
 
 13.在初始化sidekiq时添加如下内容initializers/sidekiq.rb
