@@ -11,7 +11,7 @@ gem 'rails', '~> 6.0.0'
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'activerecord-postgis-adapter'
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 3.12'
 gem 'redis-namespace'
 gem 'sidekiq'
 gem 'sidekiq-cron', '~> 1.1'
